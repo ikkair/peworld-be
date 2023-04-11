@@ -10,8 +10,8 @@ const selectDetailExperience = (queryId) => {
 
 const insertExperience = (queryObject) => {
   const { queryId, id_talent, jobdesk, company_name, date_start, date_end, description, queryFilename} = queryObject
-  dateEndValue = `'${date_end}',`
-  dateEndInsert = 'date_end,'
+  let dateEndValue = `'${date_end}',`
+  let dateEndInsert = 'date_end,'
   if(date_end == "" || date_end == "undefined"){
     dateEndInsert = ""
     dateEndValue = ""
