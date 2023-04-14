@@ -41,6 +41,8 @@ const getDetailHire = async (req, res) => {
 const addHire = async (req, res) => {
     // Generate Id
     req.body.queryId = uuidv4()
+    // Payload
+    req.body.id_recruiter = req.payload.id
     try {
         const insertResult = await hireModel.insertHire(req.body)
         return commonHelper.response(res, insertResult.rows, 200, "Hire added")

@@ -50,6 +50,8 @@ const getDetailPortfolio = async (req, res) => {
 const addPortfolio = async (req, res) => {
     // Generate Id
     req.body.queryId = uuidv4()
+    // Payload
+    req.body.id_talent = req.payload.id
     // Upload to google drive
     let uploadResult
     try {

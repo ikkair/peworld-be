@@ -1,5 +1,6 @@
 // Import model
 const talentModel = require("../model/talentModel")
+const talentSkillModel = require("../model/talentSkillModel")
 
 // Import random id
 const { v4: uuidv4 } = require("uuid")
@@ -21,10 +22,29 @@ const {
 } = require("../config/googleDrive.config");
 
 const getAllTalents = async (req, res) => {
+    // Query
+    req.body.search = req.query.search || ""
+    req.body.sortby = req.query.sortby || "name"
+    req.body.page = req.query.page || 1
+    req.body.limit = req.query.limit || 3
+    req.body.offset = (req.body.page - 1) * req.body.limit
     try {
-        const selectResult = await talentModel.selectAllTalents()
+        const selectResult = await talentModel.selectAllTalents(req.body)
         if (selectResult.rowCount > 0) {
-            return commonHelper.response(res, selectResult.rows, 200, "Get all talents success")
+        // Calling count method from model
+        const {
+            rows: [count],
+        } = await talentModel.countTalents();
+        // Display response
+        const totalData = parseInt(count.count);
+        const totalPage = Math.ceil(totalData / req.body.limit);
+        const pagination = {
+            currentPage: req.body.page,
+            limit: req.body.limit,
+            totalData,
+            totalPage,
+        };
+            return commonHelper.response(res, selectResult.rows, 200, "Get all talents success", pagination)
         } else {
             return commonHelper.response(res, null, 404, "No talent available")
         }
@@ -35,12 +55,18 @@ const getAllTalents = async (req, res) => {
 }
 
 const getDetailTalent = async (req, res) => {
+    // Ask query
+    const querySkills = req.query.skills
     // Set param id as const
     const queryId = req.params.id
     try {
         const selectResult = await talentModel.selectDetailTalent(queryId)
         // Check the affected row
         if (selectResult.rowCount > 0) {
+            if(querySkills){
+                const skills = await talentSkillModel.selectTalentSkillByIdTalent(selectResult.rows[0].id)
+                selectResult.rows[0].skills = skills.rows
+            }
             delete selectResult.rows[0].password
             return commonHelper.response(res, selectResult.rows, 200, "Get detail talent success")
         } else {
@@ -78,9 +104,10 @@ const loginTalent = async (req, res) => {
     };
     const token = authHelper.generateToken(payload);
     const refreshToken = authHelper.generateRefreshToken(payload);
+    selectResult.rows[0].role = "talent"
     selectResult.rows[0].token = token
     selectResult.rows[0].refreshToken = refreshToken
-    return commonHelper.response(res, selectResult.rows, 200, "Password invalid")
+    return commonHelper.response(res, selectResult.rows, 200, "Login success")
 }
 
 const registerTalent = async (req, res) => {

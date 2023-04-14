@@ -92,3 +92,4 @@ CREATE TABLE "experiences"(
 );
 
 select talents.*, jsonb_agg(skills.*) as skills from talents inner join talent_skills on talents.id = talent_skills.id_talent inner join skills on  talent_skills.id_skill = skills.id where talents.id = 'fe90d060-32ea-405d-ad7d-93b95e4af928' group by talents.id, talent_skills.id;
+select talents.*, jsonb_agg(skills.*) as skills from talents inner join talent_skills on talents.id = talent_skills.id_talent inner join skills on  talent_skills.id_skill = skills.id group by talents.id, talent_skills.id;

@@ -1,12 +1,16 @@
 const Pool = require("../config/db")
 
 const selectAllSkills = (queryLimit) => {
-  if (!queryLimit){
+  if (!queryLimit) {
     queryLimit = 10
   }
   return Pool.query(`SELECT * FROM skills ORDER BY name ASC LIMIT '${queryLimit}'`)
 }
 
+
+const selectSkillByName = (queryName) => {
+  return Pool.query(`SELECT * FROM skills WHERE name='${queryName}'`)
+}
 const selectDetailSkill = (queryId) => {
   return Pool.query(`SELECT * FROM skills WHERE id='${queryId}'`)
 }
@@ -14,16 +18,16 @@ const selectDetailSkill = (queryId) => {
 const insertSkill = (queryObject) => {
   const { queryId, name } = queryObject
   return Pool.query(
-      `INSERT INTO skills(id, name)`+
-      `VALUES('${queryId}', '${name}')`
+    `INSERT INTO skills(id, name)` +
+    `VALUES('${queryId}', '${name}')`
   );
 }
 
 const updateSkill = (queryObject) => {
   const { queryId, name } = queryObject
   return Pool.query(
-      `UPDATE skills SET name='${name}'`+
-      `WHERE id='${queryId}'`
+    `UPDATE skills SET name='${name}'` +
+    `WHERE id='${queryId}'`
   );
 }
 
@@ -31,8 +35,9 @@ const deleteSkill = (queryId) => {
   return Pool.query(`DELETE FROM skills WHERE id='${queryId}'`)
 }
 
-module.exports = { 
+module.exports = {
   selectAllSkills,
+  selectSkillByName,
   selectDetailSkill,
   insertSkill,
   updateSkill,

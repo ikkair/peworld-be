@@ -1,5 +1,6 @@
 // Import model
 const talentSkillModel = require("../model/talentSkillModel")
+const skillModel = require("../model/skillModel")
 
 // Import random id
 const { v4: uuidv4 } = require("uuid")
@@ -42,7 +43,13 @@ const getDetailTalentSkill = async (req, res) => {
 const addTalentSkill = async (req, res) => {
     // Generate Id
     req.body.queryId = uuidv4()
+    // Payload
+    req.body.id_talent = req.payload.id
     try {
+        if (req.body.skill){
+            const selectSkillName = await skillModel.selectSkillByName(req.body.skill)
+            req.body.id_skill = selectSkillName.rows[0].id
+        }
         const insertResult = await talentSkillModel.insertTalentSkill(req.body)
         return commonHelper.response(res, insertResult.rows, 200, "Talent skill added")
     } catch (error) {

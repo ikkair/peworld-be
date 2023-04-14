@@ -8,6 +8,10 @@ const selectDetailTalentSkill = (queryId) => {
   return Pool.query(`SELECT * FROM talent_skills WHERE id='${queryId}'`)
 }
 
+const selectTalentSkillByIdTalent = (queryId) => {
+  return Pool.query(`SELECT skills.name FROM talent_skills INNER JOIN skills ON talent_skills.id_skill = skills.id WHERE id_talent='${queryId}'`)
+}
+
 const insertTalentSkill = (queryObject) => {
   const { queryId, id_skill, id_talent } = queryObject
   return Pool.query(
@@ -31,6 +35,7 @@ const deleteTalentSkill = (queryId) => {
 module.exports = { 
   selectAllTalentSkills,
   selectDetailTalentSkill,
+  selectTalentSkillByIdTalent,
   insertTalentSkill,
   updateTalentSkill,
   deleteTalentSkill

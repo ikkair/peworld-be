@@ -5,11 +5,14 @@ const router = express.Router()
 // Import controller functions
 const talentSkillController = require("../controller/talentSkillController")
 
+// Import auth
+const authMiddleware = require("../middleware/auth");
+
 // Routes
 router.get("/", talentSkillController.getAllTalentSkills)
 router.get("/:id", talentSkillController.getDetailTalentSkill)
-router.post("/", talentSkillController.addTalentSkill)
-router.put("/:id",  talentSkillController.editTalentSkill)
+router.post("/", authMiddleware.protect, talentSkillController.addTalentSkill)
+router.put("/:id", talentSkillController.editTalentSkill)
 router.delete("/:id", talentSkillController.deleteTalentSkill)
 
 // Export

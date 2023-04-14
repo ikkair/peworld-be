@@ -78,6 +78,7 @@ const loginRecruiter = async (req, res) => {
     };
     const token = authHelper.generateToken(payload);
     const refreshToken = authHelper.generateRefreshToken(payload);
+    selectResult.rows[0].role = "recruiter"
     selectResult.rows[0].token = token
     selectResult.rows[0].refreshToken = refreshToken
     return commonHelper.response(res, selectResult.rows, 200, "Password invalid")
