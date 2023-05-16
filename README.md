@@ -20,7 +20,7 @@
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-  - [Documentation](#documentation)
+<!--   - [Documentation](#documentation) -->
 - [Related Project](#related-project)
 
 # About The Project
