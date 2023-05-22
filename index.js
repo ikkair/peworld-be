@@ -14,7 +14,8 @@ const commonHelper = require("./src/helper/common");
 // Use middleware
 app.use(express.json());
 app.use(cors({
-    origin: ["*"]
+    origin: [`${process.env.FE}`],
+    methods: ["GET","PUT","POST","DELETE"]
 }));
 app.use(morgan("dev"));
 app.use(helmet());
