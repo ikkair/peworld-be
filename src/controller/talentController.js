@@ -222,5 +222,5 @@ module.exports = {
     loginTalent,
     registerTalent,
     editTalent,
-    deleteTalent
+    deletePhoto
 }
