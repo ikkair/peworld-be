@@ -7,9 +7,7 @@
   <p align="center">
     <a href="https://github.com/ikkair/peworld-be"><strong>Explore the docs »</strong></a>
     <br />
-    <a href="#">View Demo</a>
-    ·
-    <a href="#">Api Demo</a>
+    <a href="https://peworld-fe-ikkair.vercel.app/">View Demo</a>
   </p>
 </p>
 
@@ -113,4 +111,4 @@ API endpoint list are also available as published postman documentation
 
 :rocket: [`Backend Hirejob`](https://github.com/ikkair/peworld-be)
 
-:rocket: [`Demo Hirejob`](#)
+:rocket: [`Demo Hirejob`](https://peworld-fe-ikkair.vercel.app/)
